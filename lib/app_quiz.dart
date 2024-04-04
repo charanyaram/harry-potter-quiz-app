@@ -27,6 +27,7 @@ class _Quiz extends State<Quiz>{
   }
 
   void switchScreen(){
+    print('switching screens');
     setState(() {
       activeScreen = QuestionsScreen(
         onSelectAnswer: collectAnswers

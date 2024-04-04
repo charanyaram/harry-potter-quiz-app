@@ -15,14 +15,14 @@ class StateModel extends ChangeNotifier {
     'Fang',
     'Scabbers',
   ]),
-  QuizQuestion('What is the name of the train that takes students to Hogwarts?', 
+  const QuizQuestion('What is the name of the train that takes students to Hogwarts?', 
   [
     'Hogwarts Express',
     'Knight Bus',
     'Thestral Carriage',
     'Nimbus 2000',
   ]),
-  QuizQuestion(
+  const QuizQuestion(
     'Which magical device allows Harry Potter to view memories?',
     [
       'Pensieve',
@@ -31,7 +31,7 @@ class StateModel extends ChangeNotifier {
       'Invisibility Cloak',
     ],
   ),
-  QuizQuestion(
+  const QuizQuestion(
     'What is the name of the magical sport played on flying broomsticks?',
     [
       'Quidditch',
@@ -40,7 +40,7 @@ class StateModel extends ChangeNotifier {
       'Wizard Dueling',
     ],
   ),
-  QuizQuestion(
+  const QuizQuestion(
     'What is the name of the wizarding prison guarded by Dementors?',
     [
       'Azkaban',
@@ -49,7 +49,7 @@ class StateModel extends ChangeNotifier {
       'Diagon Alley',
     ],
   ),
-  QuizQuestion(
+  const QuizQuestion(
     'What is the name of the train platform where Hogwarts students catch the Hogwarts Express?',
     [
       'Platform 9¾',

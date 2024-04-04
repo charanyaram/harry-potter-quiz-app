@@ -26,7 +26,6 @@ class _QuestionsScreen extends State<QuestionsScreen> {
 
   @override
   Widget build(context) {
-    
     return Consumer<StateModel>(
       builder: (context, state, child) {
 
@@ -40,6 +39,15 @@ class _QuestionsScreen extends State<QuestionsScreen> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Text(
+                  "Question ${currentQuestionIndex + 1}",
+                  style: const TextStyle(
+                    color: Color(0xff401201),
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                Text(
                   currentQuestion.questionText,
                   style: const TextStyle(
                     color: Color(0xff401201),
@@ -47,6 +55,7 @@ class _QuestionsScreen extends State<QuestionsScreen> {
                     fontSize: 18,
                   ),
                   textAlign: TextAlign.center,
+                  key: const Key('question-text'),
                 ),
                 const SizedBox(height: 30),
                 ...currentQuestion.getShuffledAnswerList().map((answer) {
