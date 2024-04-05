@@ -4,32 +4,15 @@ import 'package:quiz_app/models/state.dart';
 import 'package:quiz_app/screens/questions_screen/app_answer_button.dart';
 
 
-class QuestionsScreen extends StatefulWidget {
-  QuestionsScreen({super.key, required this.onSelectAnswer});
-
-  void Function(String answer) onSelectAnswer;
-  @override
-  State<QuestionsScreen> createState() {
-    return _QuestionsScreen();
-  }
-}
-
-class _QuestionsScreen extends State<QuestionsScreen> {
-  var currentQuestionIndex = 0;
-
-  void answerQuestion(String selectedAnswer) {
-    setState(() {
-      widget.onSelectAnswer(selectedAnswer);
-      currentQuestionIndex++;
-    });
-  }
+class QuestionsScreen extends StatelessWidget {
+  const QuestionsScreen({super.key});
 
   @override
   Widget build(context) {
     return Consumer<StateModel>(
       builder: (context, state, child) {
 
-        var currentQuestion = state.getQuestion(currentQuestionIndex);
+        var currentQuestion = state.getCurrentQuestion();
         return SizedBox(
           width: double.infinity,
           child: Container(
@@ -39,7 +22,7 @@ class _QuestionsScreen extends State<QuestionsScreen> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Text(
-                  "Question ${currentQuestionIndex + 1}",
+                  "Question ${state.currentQuestionNumber}",
                   style: const TextStyle(
                     color: Color(0xff401201),
                     fontWeight: FontWeight.bold,
@@ -62,7 +45,8 @@ class _QuestionsScreen extends State<QuestionsScreen> {
                   return AnswerButton(
                       answerText: answer,
                       onAnswerSelect: () {
-                        answerQuestion(answer);
+                        state.addAnswer(answer);
+                        state.advanceQuestion();
                       });
                 }),
               ],

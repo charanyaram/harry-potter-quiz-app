@@ -9,7 +9,7 @@ void main() {
 
     expect(testState.questions.length, 6);
 
-    expect(testState.getQuestion(0).questionText, startsWith("What"));
+    expect(testState.getCurrentQuestion().questionText, startsWith("What"));
     
   });
 }

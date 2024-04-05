@@ -1,5 +1,3 @@
-
-
 import 'dart:collection';
 
 import 'package:flutter/foundation.dart';
@@ -59,13 +57,45 @@ class StateModel extends ChangeNotifier {
        ]
     ),
 ];
+  List<String> _answers = [];
+  int currentQuestion = 0;
+  String _status = "start";   // quiz status flag
+
+  // initialise the quiz in the constructor
+  StateModel() {
+    resetQuiz();
+  }
 
   /// An unmodifiable view of the items in the cart.
   UnmodifiableListView<QuizQuestion> get questions => UnmodifiableListView(_questions);
+  UnmodifiableListView<String> get answers => UnmodifiableListView(_answers);
+  // this is for display of the current question number which should be 1 index
+  int get currentQuestionNumber => currentQuestion + 1;
 
-  QuizQuestion getQuestion(int index) {
-    return _questions[index];
+  String get quizStatus => _status;
+
+  void startQuiz() {
+    _status = "in-progress";
+    notifyListeners();
   }
+
+  void resetQuiz() {
+    currentQuestion = 0;
+    _status = "start";
+    resetAnswers();
+    notifyListeners();
+  }
+
+  QuizQuestion getCurrentQuestion() => _questions[currentQuestion];
+
+  void advanceQuestion() {
+    if (++currentQuestion >= _questions.length) {
+      _status = "complete";
+      currentQuestion--;  // just return the last question again
+      notifyListeners();
+    }
+  }
+
 
   void add(QuizQuestion q) {
     _questions.add(q);
@@ -73,5 +103,26 @@ class StateModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  void addAnswer(String answer) {
+    _answers[currentQuestion] = answer;
+    notifyListeners();
+  }
 
+  void resetAnswers() {
+    _answers = List<String>.filled(_questions.length, "");
+  }
+
+  List<Map<String,Object>> getSummaryData(){
+    List<Map<String,Object>> summaryData = [];
+
+    for(var i=0; i < _answers.length; i++){
+      summaryData.add({
+        'questionIndex': i,
+        'question': _questions[i].questionText,
+        'correctAnswer': _questions[i].answersList[0],
+        'chosenAnswer':_answers[i],
+      });
+    }
+    return summaryData;
+  }
 }
