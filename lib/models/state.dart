@@ -1,69 +1,28 @@
 import 'dart:collection';
 
 import 'package:flutter/foundation.dart';
+import 'package:http/http.dart' as http;
 import 'package:quiz_app/models/question_model.dart';
+import 'package:quiz_app/services/api_service.dart';
 
 class StateModel extends ChangeNotifier {
   
-  final List<QuizQuestion> _questions = [
-  const QuizQuestion("What is the name of Harry Potter's Owl?", 
-  [
-    'Hedwig',
-    'Crookshanks',
-    'Fang',
-    'Scabbers',
-  ]),
-  const QuizQuestion('What is the name of the train that takes students to Hogwarts?', 
-  [
-    'Hogwarts Express',
-    'Knight Bus',
-    'Thestral Carriage',
-    'Nimbus 2000',
-  ]),
-  const QuizQuestion(
-    'Which magical device allows Harry Potter to view memories?',
-    [
-      'Pensieve',
-      'Time-Turner',
-      'Marauder''s Map',
-      'Invisibility Cloak',
-    ],
-  ),
-  const QuizQuestion(
-    'What is the name of the magical sport played on flying broomsticks?',
-    [
-      'Quidditch',
-      'Wizard Chess',
-      'Gobstones',
-      'Wizard Dueling',
-    ],
-  ),
-  const QuizQuestion(
-    'What is the name of the wizarding prison guarded by Dementors?',
-    [
-      'Azkaban',
-      'Nurmengard',
-      'Gringotts',
-      'Diagon Alley',
-    ],
-  ),
-  const QuizQuestion(
-    'What is the name of the train platform where Hogwarts students catch the Hogwarts Express?',
-    [
-      'Platform 9¾',
-      'Platform 10',
-      'Platform 7½',
-      'Platform 8',
-       ]
-    ),
-];
+  final http.Client client;
+
+  List<QuizQuestion> _questions = [];
   List<String> _answers = [];
   int currentQuestion = 0;
   String _status = "start";   // quiz status flag
 
   // initialise the quiz in the constructor
-  StateModel() {
-    resetQuiz();
+  StateModel(this.client) {
+    // get the questions from the server
+    Future<List<QuizQuestion>> futureQuestions = QuestionAPIService(client).getQuestions();
+    
+    futureQuestions.then((questionList) {
+      _questions = questionList;
+      resetQuiz();
+    });
   }
 
   /// An unmodifiable view of the items in the cart.
@@ -74,15 +33,15 @@ class StateModel extends ChangeNotifier {
 
   String get quizStatus => _status;
 
-  void startQuiz() {
-    _status = "in-progress";
-    notifyListeners();
-  }
-
   void resetQuiz() {
     currentQuestion = 0;
     _status = "start";
     resetAnswers();
+    notifyListeners();
+  }
+
+  void startQuiz() {
+    _status = "in-progress";
     notifyListeners();
   }
 
@@ -91,11 +50,9 @@ class StateModel extends ChangeNotifier {
   void advanceQuestion() {
     if (++currentQuestion >= _questions.length) {
       _status = "complete";
-      currentQuestion--;  // just return the last question again
       notifyListeners();
     }
   }
-
 
   void add(QuizQuestion q) {
     _questions.add(q);

@@ -1,22 +1,27 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
 
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
 import 'package:quiz_app/app_quiz.dart';
 import 'package:quiz_app/models/state.dart';
+import 'package:http/http.dart' as http;
+import 'package:mockito/mockito.dart';
+import 'questions.dart';
+import 'state_test.mocks.dart';
 
 void main() {
+
+  final client = MockClient();
+
+  when(client.get(Uri.parse('https://stevecassidy.github.io/harry-potter-quiz-app/lib/data/questions.json')))
+      .thenAnswer((_) async => http.Response(jsonEncode(questionsJson), 200));
+
   testWidgets('Main App interaction', (WidgetTester tester) async {
     // Build our app and trigger a frame.
     
     await tester.pumpWidget(ChangeNotifierProvider(
-         create: (context) => StateModel(),
+         create: (context) => StateModel(client),
          child: const Quiz(),
     ));
 

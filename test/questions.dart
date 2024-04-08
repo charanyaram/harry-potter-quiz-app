@@ -1,0 +1,60 @@
+
+final questionsJson = {
+  "questions": [
+    {
+      "question": "What is the name of Harry Potter's Owl?",
+      "answers": [
+        "Hedwig",
+        "Crookshanks",
+        "Fang",
+        "scabbers"
+      ]
+    },
+    {
+      "question": "What is the name of the train that takes students to Hogwarts?",
+      "answers": [
+        "Hogwarts Express",
+        "Knight Bus",
+        "Thestral Carriage",
+        "Nimbus 2000"
+      ]
+    },
+    {
+      "question": "Which magical device allows Harry Potter to view memories?",
+      "answers": [
+        "Pensieve",
+        "Time-Turner",
+        "Marauder's Map",
+        "Invisibility Cloak"
+      ]
+    },
+    {
+      "question": "What is the name of the magical sport played on flying broomsticks?",
+      "answers": [
+        "Quidditch",
+        "Wizard Chess",
+        "Gobstones",
+        "Wizard Dueling"
+      ]
+    },
+    {
+      "question": "What is the name of the wizarding prison guarded by Dementors?",
+      "answers": [
+        "Azkaban",
+        "Nurmengard",
+        "Gringotts",
+        "Diagon Alley"
+      ]
+    },
+    {
+      "question": "What is the name of the train platform where Hogwarts students catch the Hogwarts Express?",
+      "answers": [
+        "Platform 9¾",
+        "Platform 10",
+        "Platform 7½",
+        "Platform 8"
+      ]
+    }
+  ]
+};
+
