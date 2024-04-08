@@ -8,11 +8,14 @@ import 'package:http/http.dart' as http;
 
 class QuestionAPIService {
 
+  QuestionAPIService(this.client);
+
+  final http.Client client;
   final String baseURL = 'https://stevecassidy.github.io/harry-potter-quiz-app/lib/data';
 
   Future<List<QuizQuestion>> getQuestions() async {
 
-    final response = await http.get(Uri.parse('$baseURL/questions.json'));
+    final response = await client.get(Uri.parse('$baseURL/questions.json'));
 
     if (response.statusCode == 200) {
       final responseObject = jsonDecode(response.body) as Map<String, dynamic>;

@@ -1,20 +1,23 @@
 import 'dart:collection';
 
 import 'package:flutter/foundation.dart';
+import 'package:http/http.dart' as http;
 import 'package:quiz_app/models/question_model.dart';
 import 'package:quiz_app/services/api_service.dart';
 
 class StateModel extends ChangeNotifier {
   
+  final http.Client client;
+
   List<QuizQuestion> _questions = [];
   List<String> _answers = [];
   int currentQuestion = 0;
   String _status = "start";   // quiz status flag
 
   // initialise the quiz in the constructor
-  StateModel() {
+  StateModel(this.client) {
     // get the questions from the server
-    Future<List<QuizQuestion>> futureQuestions = QuestionAPIService().getQuestions();
+    Future<List<QuizQuestion>> futureQuestions = QuestionAPIService(client).getQuestions();
     
     futureQuestions.then((questionList) {
       _questions = questionList;
