@@ -10,4 +10,16 @@ class QuizQuestion {
     return shuffledAnswersList;
   }
 
+  // create a quiz question from parsed JSON data
+  factory QuizQuestion.fromJson(Map<String, dynamic> json) {
+
+    return switch(json) {
+      {
+        'question': String question,
+        'answers': List<dynamic> answers,
+      } => 
+        QuizQuestion(question, [for (var answer in answers) answer as String]),
+    _ => throw const FormatException('Failed to parse QuizQuestion'),
+    };
+  }
 }
