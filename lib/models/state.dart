@@ -45,7 +45,14 @@ class StateModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  QuizQuestion getCurrentQuestion() => _questions[currentQuestion];
+  QuizQuestion getCurrentQuestion() {
+    if (currentQuestion < _questions.length) {
+      return _questions[currentQuestion];
+    } else {
+      // return a null question since we don't have any
+      return const QuizQuestion('', []);
+    }
+  }
 
   void advanceQuestion() {
     if (++currentQuestion >= _questions.length) {
