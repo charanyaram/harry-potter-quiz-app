@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http; 
@@ -19,6 +18,8 @@ void main() {
          child: const Quiz(),
     ));
 
+    await tester.pump(const Duration(seconds: 3));
+
     // should start showing the home screen
     final titleFinder = find.text("Harry Potter Quiz App");
     final startFinder = find.text("Start the Quiz");
@@ -29,15 +30,24 @@ void main() {
     // tap the start button and we should move to the quiz
     await tester.tap(startFinder);
 
-    await tester.pump();
+    await tester.pump(const Duration(seconds: 1));
 
     // verify we're on the question screen by text
-    final questionFinder = find.text("Question 1");
-    expect(questionFinder, findsOneWidget);
+    final questionHeaderFinder = find.text("Question 1");
+    expect(questionHeaderFinder, findsOneWidget);
 
-    // or by looking for a widget key
-    final questionTextFinder = find.byKey(const Key('question-text'));
+    final questionTextFinder = find.text("What is the name of Harry Potter's Owl?");
     expect(questionTextFinder, findsOneWidget);
+
+    final answerButtonFinder = find.byKey(const Key('answer-button-0'));
+    expect(answerButtonFinder, findsOneWidget);
+
+    await tester.tap(answerButtonFinder);
+
+    await tester.pump(const Duration(seconds: 1));
+
+    final nextQuestionHeaderFinder = find.text("Question 2");
+    expect(nextQuestionHeaderFinder, findsOneWidget);
 
   });
 }
