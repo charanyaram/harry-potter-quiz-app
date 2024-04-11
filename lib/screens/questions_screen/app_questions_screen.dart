@@ -13,6 +13,7 @@ class QuestionsScreen extends StatelessWidget {
       builder: (context, state, child) {
 
         var currentQuestion = state.getCurrentQuestion();
+        var answerNumber = 0;
         return SizedBox(
           width: double.infinity,
           child: Container(
@@ -44,6 +45,7 @@ class QuestionsScreen extends StatelessWidget {
                 ...currentQuestion.getShuffledAnswerList().map((answer) {
                   return AnswerButton(
                       answerText: answer,
+                      key: Key('answer-button-${answerNumber++}'),
                       onAnswerSelect: () {
                         state.addAnswer(answer);
                         state.advanceQuestion();
