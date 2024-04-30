@@ -1,7 +1,7 @@
 name: test-harry-potter
 on: [push, workflow_dispatch]
 jobs:
-  drive:
+  test:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
