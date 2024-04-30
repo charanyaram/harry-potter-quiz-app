@@ -26,7 +26,7 @@ void main() {
   });
 
 
-  test('State model test status changes', () {
+  test('State model test status changes', () async {
     
     final client = MockClient();
 
@@ -62,8 +62,9 @@ void main() {
         testState.advanceQuestion();
       }
       if (myState == 4) {
-        expect(testState.quizStatus, 'done');
+        expect(testState.quizStatus, 'complete');
       }
     });
+
   });
 }
