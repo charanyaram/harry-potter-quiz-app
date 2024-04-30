@@ -11,10 +11,11 @@ jobs:
         channel: stable
         flutter-version-file: pubspec.yaml
         cache: true
-    - run: flutter test
+    - run: flutter test --machine > test-results.json
     - name: Test Report
       uses: dorny/test-reporter@v1
       if: success() || failure()    # run this step even if previous step failed
       with:
         name: Flutter Tests
         reporter: flutter-json
+        path: test-results.json
